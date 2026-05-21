@@ -16,6 +16,7 @@ struct ActionRequest
 {
 	ActionRequestType type;
 	HttpRequest request;
+	HttpRequest* requestPtr;
 	HttpResponse response;
 	Location const* location;
 	std::string scriptPath;
@@ -23,6 +24,6 @@ struct ActionRequest
 	std::string scriptName;
 	std::string pathInfo;
 
-	ActionRequest() : type(ACTION_IMMEDIATE_RESPONSE), location(NULL) {}
+	ActionRequest() : type(ACTION_IMMEDIATE_RESPONSE), requestPtr(NULL), location(NULL) {}
 };
 #endif

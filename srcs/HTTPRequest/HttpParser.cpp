@@ -225,17 +225,17 @@ HttpRequest HttpParser::parseRequest(std::string const& rawRequest)
         request.headers[key] = value;
     }
     std::map<std::string, std::string>::iterator te = request.headers.find("transfer-encoding");
-    std::string rawBody = rawRequest.substr(headerEnd + 4);
     if (te != request.headers.end() && toLowerString(te->second).find("chunked") != std::string::npos)
         request.isChunked = true;
     if (request.isChunked)
     {
+        std::string rawBody = rawRequest.substr(headerEnd + 4);
         if (!decodeChunkendBody(rawBody, request.body))
             throw std::runtime_error("bad chunked body");
         request.headers.erase("content-length");
     }
     else
-        request.body = rawBody;
+        request.body.assign(rawRequest, headerEnd + 4, std::string::npos);
     if (request.version == "HTTP/1.1"
         && request.headers.find("host") == request.headers.end())
         throw std::runtime_error("Invalid HTTP request: missing Host header");

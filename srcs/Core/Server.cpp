@@ -152,10 +152,12 @@ bool Server::clientTimedOut(int fd, time_t now, int timeout)
 	return (now - _clients[fd].lastActivity > timeout);
 }
 
-bool Server::startCgiForClient (int fd, ActionRequest const& action)
+bool Server::startCgiForClient (int fd, ActionRequest& action)
 {
 	Client& client = _clients[fd];
-	if (!CgiManager::startProcess(client.cgi, action.request, _conf, action.location, action.scriptPath, action.scriptName, action.pathInfo, action.interpreter))
+	if (!action.requestPtr)
+		return false;
+	if (!CgiManager::startProcess(client.cgi, *action.requestPtr, _conf, action.location, action.scriptPath, action.scriptName, action.pathInfo, action.interpreter))
 		return false;
 	client.cgiActive = true;
 	return true;

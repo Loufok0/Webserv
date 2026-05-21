@@ -16,7 +16,7 @@ class CgiManager
 		static std::string getCgiInterpreter(const std::string& extension, const Location* location);
 
 		static bool startProcess(CgiProcess& process,
-			const HttpRequest& request,
+			HttpRequest& request,
 			const ServerConfig& server,
 			const Location* location,
 			const std::string& scriptPath,

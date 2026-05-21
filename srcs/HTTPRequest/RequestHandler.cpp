@@ -667,7 +667,7 @@ static bool findCgiScriptInPath(std::string const& requestPath, Location const* 
 	return true;
 }
 
-ActionRequest RequestHandler::resolveAction(HttpRequest const& request,
+ActionRequest RequestHandler::resolveAction(HttpRequest& request,
 	ServerConfig const& server, Location const* location)
 {
 	ActionRequest action;
@@ -706,7 +706,7 @@ ActionRequest RequestHandler::resolveAction(HttpRequest const& request,
 		action.interpreter = CgiManager::getCgiInterpreter(extension, location);
 		
 		action.type = ACTION_START_CGI;
-		action.request = request;
+		action.requestPtr = &request;
 		action.location = location;
 		action.scriptPath = filePath;
 		action.scriptName = scriptName;

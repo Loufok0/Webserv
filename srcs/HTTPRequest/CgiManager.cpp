@@ -341,7 +341,7 @@ HttpResponse CgiManager::buildResponseFromCgiOutput(const std::string& output)
 }
 
 bool CgiManager::startProcess(CgiProcess& process,
-	const HttpRequest& request,
+	HttpRequest& request,
 	const ServerConfig& server,
 	const Location* location,
 	const std::string& scriptPath,
@@ -427,7 +427,7 @@ bool CgiManager::startProcess(CgiProcess& process,
 	process.stdoutFd = outputPipe[0];
 	fcntl(process.stdinFd, F_SETFL, fcntl(process.stdinFd, F_GETFL, 0) | O_NONBLOCK);
 	fcntl(process.stdoutFd, F_SETFL, fcntl(process.stdoutFd, F_GETFL, 0) | O_NONBLOCK);
-	process.inputBuffer = request.body;
+	process.inputBuffer.swap(request.body);
 	process.inputOffset = 0;
 	process.outputBuffer.clear();
 	process.stdinClosed = false;
