@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by mm-furi, nicolsan, malapoug.*
+*This project has been created as part of the 42 curriculum by [mm-furi](https://github.com/princiamf2), [nicolsan](https://github.com/Nanborg/), [malapoug](https://github.com/Loufok0/).*
 
 ---
 
